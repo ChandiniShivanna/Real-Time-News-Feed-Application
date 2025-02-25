@@ -16,9 +16,20 @@ const io = new Server(server, {
     methods: ["GET", "POST"],
   },
 });
-
+app.use(
+  cors({
+    origin: "*", // Allow requests from any origin (you can restrict this later)
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+app.use(
+  cors({
+    origin: "http://localhost:5173", // Only allow requests from your frontend
+  })
+);
 // Middleware
-app.use(cors());
+
 app.use(express.json());
 
 // Swagger API Documentation
