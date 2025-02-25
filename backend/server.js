@@ -55,6 +55,6 @@ app.use("/api/news", newsRoutes);
 // Connect to MongoDB
 
 mongoose
-  .connect(MONGO_URI)
+  .connect(process.env.MONGO_URI)
   .then(() => console.log(" Connected to MongoDB"))
   .catch((error) => console.error(" MongoDB Connection Error:", error));
