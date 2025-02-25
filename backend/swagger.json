@@ -1,0 +1,106 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Real-Time News Feed API",
+    "version": "1.0.0",
+    "description": "API documentation for the Real-Time News Feed Application"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000",
+      "description": "Local server"
+    }
+  ],
+  "paths": {
+    "/api/news": {
+      "get": {
+        "summary": "Get news articles",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "category",
+            "schema": { "type": "string" },
+            "description": "Filter news by category"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of news articles",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/News" }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a news article",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/NewsInput" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "News article created",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/News" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/news/trending": {
+      "get": {
+        "summary": "Get trending news articles",
+        "responses": {
+          "200": {
+            "description": "List of trending news articles",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/News" }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "News": {
+        "type": "object",
+        "properties": {
+          "_id": { "type": "string" },
+          "title": { "type": "string" },
+          "content": { "type": "string" },
+          "category": { "type": "string" },
+          "views": { "type": "integer" },
+          "likes": { "type": "integer" },
+          "createdAt": { "type": "string", "format": "date-time" }
+        }
+      },
+      "NewsInput": {
+        "type": "object",
+        "properties": {
+          "title": { "type": "string" },
+          "content": { "type": "string" },
+          "category": { "type": "string" }
+        },
+        "required": ["title", "content", "category"]
+      }
+    }
+  }
+}
